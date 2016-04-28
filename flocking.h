@@ -9,7 +9,6 @@
 
 //  f ////////////////////////////////////////////////////////////////////////////////////////////////////////
 void S(double *res, double *v, int N, int d);
-
 void Si(double *res, double *v, int d);
 
 void fx(double *res, double *v, int N, int d);
@@ -18,8 +17,7 @@ void fx(double *res, double *v, int N, int d);
 
 
 //  Gf ///////////////////////////////////////////////////////////////////////////////////////////////////////
-void GS(double *res, double *v, int N, int d);
-
+void GS(double *res, double *x, int N, int d, int nx);
 
 
 

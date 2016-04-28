@@ -5,14 +5,16 @@
 
 //  f ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-void S(double *res, double *v, int N, int d)
+void S(double *res, double *x, int N, int d)
 {
-	int i;
+	res += (N+1)*d;
+	x   += (N+1)*d;
 
+	int i;
 	for(i=0; i<=N; i++)
 	{
-		Si(res, v, d); 
-		v  +=d;
+		Si(res, x, d); 
+		x  +=d;
 		res+=d;
 	}
 }
@@ -23,23 +25,24 @@ void Si(double *res, double *v, int d)
 
 	for(i=0; i<d; i++)
 	{
-		res[i] =   (alpha - beta*norm(v, d))*v[i];
+		res[i] =   (alpha - beta*norm(v, d)*norm(v, d))*v[i];
 	}
 }
 
 
 
 
-void fx(double *res, double *v, int N, int d)
+void fx(double *res, double *x, int N, int d)
 {
-	int i, j, k;
+	x += (N+1)*d;
 
+	int i, j, k;
 	k=0;
 	for(i=0; i<=N; i++)
 	{
 		for (j=0; j<d; j++)
 		{
-			res[k] = v[k];
+			res[k] = x[k];
 			k++;
 		}
 	}
@@ -49,16 +52,32 @@ void fx(double *res, double *v, int N, int d)
 
 //  Gf ////////////////////////////////////////////////////////////////////////////////////////////////
 
-void GS(double *res, double *v, int N, int d)
+void GS(double *res, double *x, int N, int d, int nx)
 {
-	int i;
+	int i, j, k, l;
 
-	for(i=0; i<=N; i++)
+	
+
+	for(i=N+1; i<2*(N+1); i++)
 	{
-		Si(res, v, d); 
-		v  +=d;
-		res+=d;
+		double temp = norm(&x[i*d], d);
+
+		for(k=i*d; k<i*d+d; k++)
+		{
+			for(l=i*d; l<i*d+d; l++)
+			{
+				if(k==l)
+				{
+					res[map(k, l, nx)] += (alpha - beta*temp*temp);
+				}
+				res[map(k, l, nx)] += -2*beta*x[k]*x[l];
+			}	
+		}
 	}
+
+
+	
+
 }
 
 

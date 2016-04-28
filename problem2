@@ -1,0 +1,152 @@
+
+Termination status: 4
+Line search fails, too many secant steps
+Possible causes of this error message:
+   - your tolerance may be too strict: grad_tol =  1.000000e-06
+absolute largest component of gradient: 1.542888e-05
+function value: -2.282333e+11
+cg iterations: 912
+function evaluations: 1633
+gradient evaluations: 2031
+Final state: 
+final[1] = 2.2823330365e+11
+final[2] = 7.2430095955e-05
+final[3] = 2.4115703741e+04
+Terminal cost: -2.2823330070e+11
+error = 4.5414e-04
+
+Termination status: 0
+Convergence tolerance for gradient satisfied
+absolute largest component of gradient: 4.145586e-01
+function value: -2.282333e+11
+cg iterations: 65
+function evaluations: 104
+gradient evaluations: 168
+Final state: 
+final[1] = 2.2823330090e+11
+final[2] = 5.1079637373e-06
+final[3] = 2.4115704243e+04
+Terminal cost: -2.2823330070e+11
+error = 3.0085e-05
+
+Termination status: 0
+Convergence tolerance for gradient satisfied
+absolute largest component of gradient: 2.265807e-02
+function value: -2.282333e+11
+cg iterations: 61
+function evaluations: 99
+gradient evaluations: 159
+Final state: 
+final[1] = 2.2823330071e+11
+final[2] = -6.2261031886e-09
+final[3] = 2.4115704276e+04
+Terminal cost: -2.2823330070e+11
+error = 1.5882e-06
+
+Termination status: 0
+Convergence tolerance for gradient satisfied
+absolute largest component of gradient: 1.368368e-03
+function value: -2.282333e+11
+cg iterations: 72
+function evaluations: 129
+gradient evaluations: 200
+Final state: 
+final[1] = 2.2823330070e+11
+final[2] = -9.4182244226e-09
+final[3] = 2.4115704278e+04
+Terminal cost: -2.2823330070e+11
+error = 5.6013e-08
+
+Termination status: 0
+Convergence tolerance for gradient satisfied
+absolute largest component of gradient: 5.407267e-05
+function value: -2.282333e+11
+cg iterations: 136
+function evaluations: 184
+gradient evaluations: 319
+Final state: 
+final[1] = 2.2823330070e+11
+final[2] = 1.9230395054e-09
+final[3] = 2.4115704278e+04
+Terminal cost: -2.2823330070e+11
+error = 4.8953e-09
+
+Termination status: 4
+Line search fails, too many secant steps
+Possible causes of this error message:
+   - your tolerance may be too strict: grad_tol =  4.895268e-06
+absolute largest component of gradient: 4.493106e-05
+function value: -2.282333e+11
+cg iterations: 87
+function evaluations: 165
+gradient evaluations: 251
+Final state: 
+final[1] = 2.2823330070e+11
+final[2] = 8.2599704854e-11
+final[3] = 2.4115704278e+04
+Terminal cost: -2.2823330070e+11
+error = 3.9183e-10
+
+Termination status: 4
+Line search fails, too many secant steps
+Possible causes of this error message:
+   - your tolerance may be too strict: grad_tol =  3.918279e-07
+absolute largest component of gradient: 1.476276e-05
+function value: -2.282333e+11
+cg iterations: 138
+function evaluations: 261
+gradient evaluations: 398
+Final state: 
+final[1] = 2.2823330070e+11
+final[2] = 1.4551915228e-11
+final[3] = 2.4115704278e+04
+Terminal cost: -2.2823330070e+11
+error = 1.4552e-11
+
+Termination status: 4
+Line search fails, too many secant steps
+Possible causes of this error message:
+   - your tolerance may be too strict: grad_tol =  1.455192e-08
+absolute largest component of gradient: 1.493801e-05
+function value: -2.282333e+11
+cg iterations: 27
+function evaluations: 92
+gradient evaluations: 118
+Final state: 
+final[1] = 2.2823330070e+11
+final[2] = 3.8147263126e-12
+final[3] = 2.4115704278e+04
+Terminal cost: -2.2823330070e+11
+error = 7.4527e-12
+
+Termination status: 4
+Line search fails, too many secant steps
+Possible causes of this error message:
+   - your tolerance may be too strict: grad_tol =  7.452705e-09
+absolute largest component of gradient: 1.469672e-05
+function value: -2.282333e+11
+cg iterations: 2
+function evaluations: 95
+gradient evaluations: 96
+Final state: 
+final[1] = 2.2823330070e+11
+final[2] = -3.5447200730e-12
+final[3] = 2.4115704278e+04
+Terminal cost: -2.2823330070e+11
+error = 3.5447e-12
+
+Termination status: 4
+Line search fails, too many secant steps
+Possible causes of this error message:
+   - your tolerance may be too strict: grad_tol =  3.544720e-09
+absolute largest component of gradient: 1.157660e-05
+function value: -2.282333e+11
+cg iterations: 46
+function evaluations: 119
+gradient evaluations: 164
+Final state: 
+final[1] = 2.2823330070e+11
+final[2] = 2.6991742175e-12
+final[3] = 2.4115704278e+04
+Terminal cost: -2.2823330070e+11
+error = 2.0889e-11

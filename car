@@ -1,0 +1,4 @@
+ #!/bin/bash         
+
+gcc -g *.c -o driver1 -lm
+./driver1

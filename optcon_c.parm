@@ -1,0 +1,30 @@
+0       PrintLevel  ( 0: no printout    1: print out the result from each iteration )
+1       PrintFinal  ( 0: no printout    1: print out the final result )
+2       scheme      ( choice of explicit Runge-Kutta schemes are listed below )
+        
+
+0:          user provides
+
+1:               | 0  0 |            |1/2|
+            A =  | 1  0 |        b = |1/2|
+
+2:              | 0  0  0|           |1/6|
+            A = |.5  0  0|       b = |2/3|
+                |-1  2  0|           |1/6|
+
+3:              | 0  0  0|           |2/9|
+            A = |.5  0  0|       b = |1/3|
+                |0 .75  0|           |4/9|
+
+4:              | 0  0  0|           |1/3|
+            A = |.5  0  0|       b = |1/3|
+                |.5 .5  0|           |1/3|
+
+5:              | 0   0   0|         |1/6|
+            A = | 1   0   0|     b = |1/6|
+                |.25 .25  0|         |2/3|
+
+6:              | 0  0  0  0|        |1/6|
+            A = |.5  0  0  0|    b = |1/3|
+                | 0 .5  0  0|        |1/3|
+                | 0  0  1  0|        |1/6|

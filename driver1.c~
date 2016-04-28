@@ -1,0 +1,107 @@
+/*driver1 problem:
+          minimize 0.5*\int_0^1 u(t)^2 + 2*x(t)^2 \dt
+          subject to x'(t) = .5*x(t) + u(t)
+                      x(0) = 1
+  Let 
+     x_1(t) be denoted to x(t) and
+     x_2'(t) = 2*x_1(t)^2 + u(t)^2, 
+  by fundamental theorem of calculus, the original 
+  cost function becomes:
+     0.5*(x_2(1)-x_2(0)) .
+  Let's set x_2(0) = 0, then the original problem can be
+  transformed into:
+              minimize 0.5*x_2(1)
+       system dynamics:
+                       x_1'(t) = .5*x_1(t) + u(t),
+                       x_2'(t) = 2*x_1(t)^2 + u(t)^2, where t is in [0, 1]
+       initial conditions:
+                       x_1(0) = 1,
+                       x_2(0) = 0 .
+*/
+#include "optcon.h"
+void my_f(double *f, double *x, double *u, double time);// evaluate of f(x)
+void my_dphi(double *dphi, double *x_f); // evaluate of dF/dx
+double my_phi(double *x_f); //evaluate of F
+void my_fu(double *fu, double *x, double *u, double time); //evaluate of df/du
+void my_fx(double *fx, double *x, double *u, double time); //evaluate of df/dx
+int n = 500;
+int nx = 2; 
+int nc = 1;
+int ns = 3;
+int main(void) {
+       double t0, tf ;
+       double state0[nx];
+       double grad_tol = 1.0e-15;
+       double *state;
+       double *control;
+       double *a, *b;
+       double x = (2.*exp(3.)+exp(3.))/(exp(3./2.)*(2.+exp(3.)));
+       double error;
+       int i;
+       int x1, x2;
+       t0 = 0;
+       tf = 1;
+       /* allocate memory */
+       state = (double*) malloc((n*ns*nx+nx)*sizeof(double));
+       control = (double*) malloc(n*ns*nc*sizeof(double));
+       /*initial control*/
+       for ( i = 0; i < n*ns*nc; i ++ ) {
+           control[i] = .5;
+       }
+       /*initial state0*/
+       state0[0] = 1;
+       state0[1] = 0;
+       /*call optcon_xrk*/
+       optcon(grad_tol, n, nx, nc, ns, t0, tf, control, &state0[0], 
+              state, a, b, my_phi, my_dphi, my_f, my_fx, my_fu);
+       x1 = n*ns*nx;
+       x2 = n*ns*nx + 1;
+       error = fabs(x-state[x1]);
+       printf("error = %.4e\n", error);
+       free(state);
+       free(control);
+}
+void my_f(double *f, double *x, double *u, double time)// evaluate of f(x)
+{
+     f[0] = .5*x[0] + u[0];
+     f[1] = u[0]*u[0] + 2*x[0]*x[0];
+     return;
+     ///* delete after compile */
+     //double b;
+     //b = time;
+}
+void my_dphi(double *dphi, double *x_f) // evaluate of dF/dx
+{
+     dphi[0] = 0;
+     dphi[1] = .5;
+     return;
+     ///* delete after compile */
+     //double a;
+     //a = x_f[0];
+}
+double my_phi(double *x_f) //evaluate of F
+{
+     return .5*x_f[1];
+}
+void my_fu(double *fu, double *x, double *u, double time) //evaluate of df/du
+{
+     fu[0] = 1;
+     fu[1] = 2*u[0];
+     return;
+     ///*delete after compile*/
+     //double a, b;
+     //a = x[0];
+     //b = time;
+}     
+void my_fx(double *fx, double *x, double *u, double time) //evaluate of df/dx
+{
+     fx[0] = 0.5;
+     fx[2] = 4*x[0];
+     fx[1] = 0;
+     fx[3] = 0;
+     return;
+     ///*delete after compile */
+     //double a, b;
+     //a = *u;
+     //b = time;
+}     

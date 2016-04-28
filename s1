@@ -1,0 +1,20 @@
+
+Termination status: 6
+Line search fails
+Possible causes of this error message:
+   - your tolerance may be too strict: grad_tol =  1.000000e-15
+   - your gradient routine has an error
+   - the parameter epsilon in cg_descent_c.parm is too small
+absolute largest component of gradient: 2.169511e-02
+function value: 5.144275e+00
+cg iterations: 1
+function evaluations: 53
+gradient evaluations: 52
+Final state: 
+final[1] = 4.2207195995e+00
+final[2] = 3.0292788402e+00
+final[3] = 2.7951369355e-03
+final[4] = 4.1823905617e-01
+final[5] = 8.1758549296e-02
+Terminal cost: 5.1442753098e+00
+error = 1.7793e+00

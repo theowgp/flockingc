@@ -1,0 +1,13 @@
+
+Termination status: 0
+Convergence tolerance for gradient satisfied
+absolute largest component of gradient: 3.649043e-16
+function value: 8.641645e-01
+cg iterations: 21
+function evaluations: 34
+gradient evaluations: 37
+Final state: 
+final[1] = 6.0877248520e-01
+final[2] = 1.7283289937e+00
+Terminal cost: 8.6416449684e-01
+error = 5.1384e-10

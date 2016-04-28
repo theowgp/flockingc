@@ -1,0 +1,2 @@
+ADD_EXECUTABLE(driver1 cg_descent.c optcon.c driver1.c)
+TARGET_LINK(driver1 m)

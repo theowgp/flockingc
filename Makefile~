@@ -1,0 +1,21 @@
+all: driver1 driver2 
+
+CC = /opt/gcc3/bin/gcc -lm -std="c99" -pedantic -W -Wall -Wno-parentheses -Wshadow -Wcast-align -Winline -Wstrict-prototypes -Wno-unknown-pragmas -Werror -g
+
+INCLUDE = cg_descent.h optcon.h
+
+OBJ = cg_descent.o optcon.o
+
+$(OBJ): $(INCLUDE)
+
+driver1: $(OBJ) $(INCLUDE) driver1.c
+	$(CC) -o driver1 driver1.c $(OBJ)
+
+driver2: $(OBJ) $(INCLUDE) driver2.c
+	$(CC) -o driver2 driver2.c $(OBJ)
+
+clean:
+	rm *.o
+
+purge:
+	rm *.o driver1 driver2

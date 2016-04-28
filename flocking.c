@@ -3,7 +3,7 @@
 
 
 
-
+//  f ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 void S(double *res, double *v, int N, int d)
 {
@@ -27,18 +27,6 @@ void Si(double *res, double *v, int d)
 	}
 }
 
-double norm(double *v, int n)
-{
-	double temp = 0;
-
-	int i;
-	for(i = 0; i<n; i++)
-	{
-		temp += v[i]*v[i];
-	} 
-
-	return sqrt(temp);
-}
 
 
 
@@ -55,4 +43,55 @@ void fx(double *res, double *v, int N, int d)
 			k++;
 		}
 	}
+}
+
+
+
+//  Gf ////////////////////////////////////////////////////////////////////////////////////////////////
+
+void GS(double *res, double *v, int N, int d)
+{
+	int i;
+
+	for(i=0; i<=N; i++)
+	{
+		Si(res, v, d); 
+		v  +=d;
+		res+=d;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////////////////////////
+double norm(double *v, int n)
+{
+	double temp = 0;
+
+	int i;
+	for(i = 0; i<n; i++)
+	{
+		temp += v[i]*v[i];
+	} 
+
+	return sqrt(temp);
+}
+
+int map(int i, int j, int nx)
+{
+	return j*nx + i;
+}
+int* imap(int k, int nx)
+{
+	int *res =	(int*) malloc(2*sizeof(int));
+	res[0] = k%nx;
+	res[1] = k/nx;
+	return res;
 }

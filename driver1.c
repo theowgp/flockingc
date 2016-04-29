@@ -13,7 +13,7 @@ double my_phi(double *x_f); //evaluate of F
 void my_fu(double *fu, double *x, double *u, double time); //evaluate of df/du
 void my_fx(double *fx, double *x, double *u, double time); //evaluate of df/dx
 
-
+double T = 1;
 
 int N = 1;
 int d = 2;
@@ -34,13 +34,12 @@ int main(void)
      // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
      double x[] = {1, 1, 1, 1, 1, 2, 3, 4, 999 };
      double u[] = {1, 1};
-     // double f[nx];
-     double *f;
-     f = (double*) malloc(nx*sizeof(double));
-     // f[nx-1] = 999;
 
+
+     // double *f;
+     // f = (double*) malloc(nx*sizeof(double));  // what is the difference ???????????
+     double f[nx];                                // what is the difference ???????????
      my_f(f, x, u, 0);
-
      printf("\nf = \n");
      pad(f, nx);
 
@@ -60,6 +59,17 @@ int main(void)
      my_fu(matrixu, x, u, 0);
      printf("\nfu =");
      pmd(matrixu,  nx, d);
+
+     double valuephi;
+     valuephi = my_phi(f);
+     printf("\nphi = %f\n", valuephi);
+
+     double *vectordphi;
+     vectordphi = (double*) malloc(nx*sizeof(double));
+     my_dphi(vectordphi, f);
+     printf("\ndphi =");
+     pmd(vectordphi,  nx, 1);
+
 
 
      printf("\n");
@@ -94,17 +104,33 @@ void my_f(double *f, double *x, double *u, double time)// evaluate of f(x)
 
 void my_dphi(double *dphi, double *x_f) // evaluate of dF/dx
 {
-     dphi[0] = 0;
-     dphi[1] = .5;
+ 	 setmt0(dphi, nx, d);
+
+ 	 double *des = xdes(T, d);
+
+ 	 int k;
+	 for(k=0; k<d; k++)
+	 {
+	 	dphi[k] = x_f[k] - des[k];
+	 }
+
+	 dphi[nx-1] = 1;
+
      return;
-     ///* delete after compile */
-     //double a;
-     //a = x_f[0];
 }
 
 double my_phi(double *x_f) //evaluate of F
 {
-     return .5*x_f[1];
+	 double *temp =	(double*) malloc(d*sizeof(double));
+	 double *des = xdes(T, d);
+
+	 int k;
+	 for(k=0; k<d; k++)
+	 {
+	 	temp[k] = x_f[k] - des[k];
+	 }
+
+     return 0.5*norm(temp, d)*norm(temp, d) + x_f[nx-1];
 }
 
 void my_fu(double *fu, double *x, double *u, double time) //evaluate of df/du

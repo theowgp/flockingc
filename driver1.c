@@ -2,17 +2,17 @@
 #include "flocking.h"
 #include "optcon.h"
 #include "params2.h"
+#include "plugin1.h"
 
 
 
-void pad(double *f, int n);
-void pmd(double *f, int n);
 
 void my_f(double *f, double *x, double *u, double time);// evaluate of f(x)
 void my_dphi(double *dphi, double *x_f); // evaluate of dF/dx
 double my_phi(double *x_f); //evaluate of F
 void my_fu(double *fu, double *x, double *u, double time); //evaluate of df/du
 void my_fx(double *fx, double *x, double *u, double time); //evaluate of df/dx
+
 
 
 int N = 1;
@@ -22,7 +22,6 @@ int n = 100;
 int nx = 9;
 int nc = 2;
 int ns = 3;
-
 
 
 
@@ -42,6 +41,7 @@ int main(void)
 
      my_f(f, x, u, 0);
 
+     printf("\nf = \n");
      pad(f, nx);
 
      // int testtemp1 = 7%2;
@@ -49,11 +49,20 @@ int main(void)
      // printf("\n k = %d\n", map(0, 2, 3));
      // int *testtemp = imap(6, 3);
      // printf(" i = %d\n j = %d\n\n", testtemp[0], testtemp[1]);
-     double *matrix;
-     matrix = (double*) malloc(nx*nx*sizeof(double));
-     my_fx(matrix, x, u, 0);
-     pmd(matrix,  nx);
+     double *matrixf;
+     matrixf = (double*) malloc(nx*nx*sizeof(double));
+     my_fx(matrixf, x, u, 0);
+     printf("\nfx =");
+     pmd(matrixf,  nx, nx);
 
+     double *matrixu;
+     matrixu = (double*) malloc(nx*d*sizeof(double));
+     my_fu(matrixu, x, u, 0);
+     printf("\nfu =");
+     pmd(matrixu,  nx, d);
+
+
+     printf("\n");
 }
 
 
@@ -99,42 +108,47 @@ double my_phi(double *x_f) //evaluate of F
 }
 
 void my_fu(double *fu, double *x, double *u, double time) //evaluate of df/du
-{
-     fu[0] = 1;
-     fu[1] = 2*u[0];
+{ 
+     setmt0(fu, nx, d);
+
+     int i, k, l;
+
+     i = (N+1);
+     for(k=0; k<d; k++)
+	 {
+		 fu[map(i*d + k, k, nx)] = 1;
+	 }
+
+	 i = 2*(N+1);
+	 for(k=0; k<d; k++)
+	 {
+		 fu[map(i*d, k, nx)] = nu*u[k];
+	 }
+	 
+
+     
      return;
-     ///*delete after compile*/
-     //double a, b;
-     //a = x[0];
-     //b = time;
 }   
 
 void my_fx(double *fx, double *x, double *u, double time) //evaluate of df/dx
 {
 
-	int i, j, k, l;
-
-     // set the matrix to zero
-	for(i=0; i<nx; i++)
-	{
-		for (j=0; j<nx; j++)
-		{
-			fx[map(i, j, nx)] = 0;
-		}
-	}
+	   
+	 setmt0(fx, nx, nx);
 
 
-	// set the dfx/dv part which is an identity matrix
-	for(i=0; i<N+1; i++)
-	{
-		for(k=i*d; k<i*d+d; k++)
-		{
-			fx[map(k, k + (N+1)*d, nx)] = 1;
+	 // set the dfx/dv part which is an identity matrix
+	 int i, k, l;
+	 for(i=0; i<N+1; i++)
+	 {
+		 for(k=i*d; k<i*d+d; k++)
+		 {
+			 fx[map(k, k + (N+1)*d, nx)] = 1;
 						
-		}
-	}
+		 }
+	 }
 
-	GS(fx, x, N, d, nx);
+	 GS(fx, x, N, d, nx);
 
      return;
 }     
@@ -150,31 +164,3 @@ void my_fx(double *fx, double *x, double *u, double time) //evaluate of df/dx
 
 
 
-void pad(double *f, int n)
-{
-     printf("pad = \n");
-     int i;
-     for(i=0; i<n; i++)
-     {
-       printf("%f  ", f[i]);
-       // printf("%f  ", *f++);
-     } 
-     printf("\n");
-}
-
-void pmd(double *f, int n)
-{
-     int i, j;
-     printf("pmd = \n");
-     for(i=0; i<n; i++)
-     {
-     	printf("\n");
-     	for(j=0; j<n; j++)
-     	{
-     		printf("%f    ", f[map(i, j, n)]);
-       
-     	}
-       
-     } 
-     printf("\n");
-}

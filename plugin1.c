@@ -21,7 +21,7 @@ void pmd(double *f, int n, int m)
      	printf("\n");
      	for(j=0; j<m; j++)
      	{
-     		printf("%f    ", f[map(i, j, n)]);
+     		printf("%f    ", f[map(i, j, m)]);
        
      	}
        
@@ -36,7 +36,7 @@ void setmt0(double *f, int n, int m)
 	 {
 		 for (j=0; j<m; j++)
 		 {
-			 f[map(i, j, n)] = 0;
+			 f[map(i, j, m)] = 0;
 		 }
 	 }
 }

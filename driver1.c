@@ -140,13 +140,13 @@ void my_fu(double *fu, double *x, double *u, double time) //evaluate of df/du
      i = (N+1);
      for(k=0; k<d; k++)
 	 {
-		 fu[map(i*d + k, k, nx)] = 1;
+		 fu[map(i*d + k, k, d)] = 1;
 	 }
 
 	 i = 2*(N+1);
 	 for(k=0; k<d; k++)
 	 {
-		 fu[map(i*d, k, nx)] = nu*u[k];
+		 fu[map(i*d, k, d)] = nu*u[k];
 	 }
 	 
 

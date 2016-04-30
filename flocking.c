@@ -116,7 +116,7 @@ double norm(double *v, int n)
 
 int map(int i, int j, int nx)
 {
-	return j*nx + i;
+	return i*nx + j;
 }
 int* imap(int k, int nx)
 {

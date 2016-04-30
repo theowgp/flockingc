@@ -106,7 +106,7 @@ void my_f(double *f, double *x, double *u, double time)// evaluate of f(x)
 	 	*(f + (N+1)*d + i) += u[i];
 	 }
 	    
-	 *(f+nx-1) = 0.5*nu*norm(u, nc);  //What exactly is the vector u ??? Is it n*ns*nc    or just nc ???
+	 *(f+nx-1) = 0.5*nu*norm(u, nc)*norm(u, nc);  //What exactly is the vector u ??? Is it n*ns*nc    or just nc ???
 
 	    
 	 return;

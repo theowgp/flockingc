@@ -1,1 +1,1 @@
-double nu = 2;
+double nu = 0.5;

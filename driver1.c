@@ -34,52 +34,37 @@ int ns = 3;
 
 int main(void) 
 {
-	 // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 5, 6, 7, 8, 999 };
-     // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
-     //double x[] = {1, 1, 1, 1, 1, 2, 3, 4, 999 };
-	 double x[] = {1, 1, 1, 2, 999 };
-     double u[] = {1, 1};
-
-
-     // double *f;
-     // f = (double*) malloc(nx*sizeof(double));  // what is the difference ???????????
-     double f[nx];                                // what is the difference ???????????
-     my_f(f, x, u, 0);
-     printf("\nf = \n");
-     pad(f, nx);
-
-     // int testtemp1 = 7%2;
-     // int testtemp2 = 7/2;
-     // printf("\n k = %d\n", map(0, 2, 3));
-     // int *testtemp = imap(6, 3);
-     // printf(" i = %d\n j = %d\n\n", testtemp[0], testtemp[1]);
-
-     // double *matrixf;
-     // matrixf = (double*) malloc(nx*nx*sizeof(double));
-     double matrixf[nx*nx];
-     my_fx(matrixf, x, u, 0);
-     printf("\nfx =");
-     pmd(matrixf,  nx, nx);
-
-     // double *matrixu;
-     // matrixu = (double*) malloc(nx*d*sizeof(double));
-     double matrixu[nx*d];
-     my_fu(matrixu, x, u, 0);
-     printf("\nfu =");
-     pmd(matrixu,  nx, d);
-
-     double valuephi;
-     valuephi = my_phi(f);
-     printf("\nphi = %f\n", valuephi);
-
-     // double *vectordphi;
-     // vectordphi = (double*) malloc(nx*sizeof(double));
-     double vectordphi[nx];
-     my_dphi(vectordphi, f);
-     printf("\ndphi =");
-     pmd(vectordphi,  nx, 1);
-
-
+	 double t0, tf ;
+     double state0[nx];
+     double grad_tol = 1.0e-7;
+     double *state;
+     double *control;
+     double *a, *b;
+     int i;
+     
+     t0 = 0;
+     tf = T;
+     /* allocate memory */
+     state = (double*) malloc((n*ns*nx+nx)*sizeof(double));
+     control = (double*) malloc(n*ns*nc*sizeof(double));
+     /*initial control*/
+     for ( i = 0; i < n*ns*nc; i ++ ) 
+     {
+         // control[i] = .5;
+     	control[i] = 0;
+     }
+     /*initial state0*/
+     state0[0] = 0;
+     state0[1] = 0;
+     state0[2] = 0;
+     state0[3] = 0.5;
+     state0[4] = 0;
+     /*call optcon_xrk*/
+     optcon(grad_tol, n, nx, nc, ns, t0, tf, control, &state0[0], 
+            state, a, b, my_phi, my_dphi, my_f, my_fx, my_fu);
+     
+     free(state);
+     free(control);
 
      printf("\n");
 }

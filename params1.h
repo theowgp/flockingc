@@ -1,4 +1,4 @@
 
-double alpha = 1;
-double beta = 1;
+double alpha = 0.07;
+double beta = 0.05;
 

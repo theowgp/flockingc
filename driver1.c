@@ -13,13 +13,17 @@ double my_phi(double *x_f); //evaluate of F
 void my_fu(double *fu, double *x, double *u, double time); //evaluate of df/du
 void my_fx(double *fx, double *x, double *u, double time); //evaluate of df/dx
 
+
+
+
+
 double T = 1;
 
-int N = 1;
+int N = 0;
 int d = 2;
 int n = 100;
 // int nx = 2*(N+1)*d + 1; 
-int nx = 9;
+int nx = 5;
 int nc = 2;
 int ns = 3;
 
@@ -32,7 +36,8 @@ int main(void)
 {
 	 // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 5, 6, 7, 8, 999 };
      // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
-     double x[] = {1, 1, 1, 1, 1, 2, 3, 4, 999 };
+     //double x[] = {1, 1, 1, 1, 1, 2, 3, 4, 999 };
+	 double x[] = {1, 1, 1, 2, 999 };
      double u[] = {1, 1};
 
 
@@ -48,14 +53,17 @@ int main(void)
      // printf("\n k = %d\n", map(0, 2, 3));
      // int *testtemp = imap(6, 3);
      // printf(" i = %d\n j = %d\n\n", testtemp[0], testtemp[1]);
-     double *matrixf;
-     matrixf = (double*) malloc(nx*nx*sizeof(double));
+
+     // double *matrixf;
+     // matrixf = (double*) malloc(nx*nx*sizeof(double));
+     double matrixf[nx*nx];
      my_fx(matrixf, x, u, 0);
      printf("\nfx =");
      pmd(matrixf,  nx, nx);
 
-     double *matrixu;
-     matrixu = (double*) malloc(nx*d*sizeof(double));
+     // double *matrixu;
+     // matrixu = (double*) malloc(nx*d*sizeof(double));
+     double matrixu[nx*d];
      my_fu(matrixu, x, u, 0);
      printf("\nfu =");
      pmd(matrixu,  nx, d);
@@ -64,8 +72,9 @@ int main(void)
      valuephi = my_phi(f);
      printf("\nphi = %f\n", valuephi);
 
-     double *vectordphi;
-     vectordphi = (double*) malloc(nx*sizeof(double));
+     // double *vectordphi;
+     // vectordphi = (double*) malloc(nx*sizeof(double));
+     double vectordphi[nx];
      my_dphi(vectordphi, f);
      printf("\ndphi =");
      pmd(vectordphi,  nx, 1);
@@ -74,6 +83,8 @@ int main(void)
 
      printf("\n");
 }
+
+
 
 
 
@@ -113,6 +124,7 @@ void my_dphi(double *dphi, double *x_f) // evaluate of dF/dx
 	 {
 	 	dphi[k] = x_f[k] - des[k];
 	 }
+	 free(des);
 
 	 dphi[nx-1] = 1;
 
@@ -129,6 +141,7 @@ double my_phi(double *x_f) //evaluate of F
 	 {
 	 	temp[k] = x_f[k] - des[k];
 	 }
+	 free(des);
 
      return 0.5*norm(temp, d)*norm(temp, d) + x_f[nx-1];
 }

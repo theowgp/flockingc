@@ -86,8 +86,8 @@ void GS(double *res, double *x, int N, int d, int nx)
  //  Destination /////////////////////////////////////////////////////////////////////////////////////////////////////////
 double* xdes(double t, int d)
 {
-	// double *res = (double*) malloc(d*sizeof(double));
-	double res[d];
+	double *res = (double*) malloc(d*sizeof(double));
+	// double res[d];
 
 	int k;
 	for(k=0; k<d; k++)

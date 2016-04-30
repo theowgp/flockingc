@@ -60,6 +60,8 @@ int main(void)
      my_fx(matrixf, x, u, 0);
      printf("\nfx =");
      pmd(matrixf,  nx, nx);
+     // pmd(matrixf, nx*nx, 1);
+     pad(matrixf, nx*nx);
 
      // double *matrixu;
      // matrixu = (double*) malloc(nx*d*sizeof(double));
@@ -67,6 +69,8 @@ int main(void)
      my_fu(matrixu, x, u, 0);
      printf("\nfu =");
      pmd(matrixu,  nx, d);
+     // pmd(matrixu, nx*d, 1);
+     pad(matrixu, nx*d);
 
      double valuephi;
      valuephi = my_phi(f);
@@ -78,6 +82,7 @@ int main(void)
      my_dphi(vectordphi, f);
      printf("\ndphi =");
      pmd(vectordphi,  nx, 1);
+     pad(vectordphi, nx);
 
 
 
@@ -155,13 +160,13 @@ void my_fu(double *fu, double *x, double *u, double time) //evaluate of df/du
      i = (N+1);
      for(k=0; k<d; k++)
 	 {
-		 fu[map(i*d + k, k, nx)] = 1;
+		 fu[map(i*d + k, k, d)] = 1;
 	 }
 
 	 i = 2*(N+1);
 	 for(k=0; k<d; k++)
 	 {
-		 fu[map(i*d, k, nx)] = nu*u[k];
+		 fu[map(i*d, k, d)] = nu*u[k];
 	 }
 	 
 

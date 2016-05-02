@@ -19,11 +19,11 @@ void my_fx(double *fx, double *x, double *u, double time); //evaluate of df/dx
 
 double T = 1;
 
-int N = 0;
+int N = 1;
 int d = 2;
 int n = 100;
 // int nx = 2*(N+1)*d + 1; 
-int nx = 5;
+int nx = 9;
 int nc = 2;
 int ns = 3;
 
@@ -36,8 +36,8 @@ int main(void)
 {
 	 // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 5, 6, 7, 8, 999 };
      // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
-     //double x[] = {1, 1, 1, 1, 1, 2, 3, 4, 999 };
-	 double x[] = {1, 1, 1, 2, 999 };
+     double x[] = {1, 0, 2, 0, 1, 2, 3, 4, 999 };
+	 // double x[] = {1, 1, 1, 2, 999 };
      double u[] = {1, 1};
 
 
@@ -61,6 +61,7 @@ int main(void)
      printf("\nfx =");
      pmd(matrixf,  nx, nx);
      // pmd(matrixf, nx*nx, 1);
+     printf("\n");
      pad(matrixf, nx*nx);
 
      // double *matrixu;
@@ -70,6 +71,7 @@ int main(void)
      printf("\nfu =");
      pmd(matrixu,  nx, d);
      // pmd(matrixu, nx*d, 1);
+     printf("\n");
      pad(matrixu, nx*d);
 
      double valuephi;
@@ -82,6 +84,7 @@ int main(void)
      my_dphi(vectordphi, f);
      printf("\ndphi =");
      pmd(vectordphi,  nx, 1);
+     printf("\n");
      pad(vectordphi, nx);
 
 
@@ -104,6 +107,10 @@ void my_f(double *f, double *x, double *u, double time)// evaluate of f(x)
 	 fx(f, x, N, d);          //What exactly is the vector x ??? Is it n*ns*nx+nx or just nx ???
 	     
 	 S(f, x, N, d);
+
+	 M(f, x, N, d);
+
+	 L(f, x, N, d);
 
 	 int i;
 	 for(i=0; i<d; i++)

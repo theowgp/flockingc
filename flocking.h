@@ -20,8 +20,8 @@ void fx(double *res, double *v, int N, int d);
 void GS(double *res, double *x, int N, int d, int nx);
 
 void GM(double *res, double *x, int N, int d, int nx);
-double dmdx(double *x, int i, int j, int k, int l, int N, int d);
-double dmdy(double *x, int i, int j, int k, int l, int N, int d);
+double dmdx(double *x, int i, int j, int k, int l, int N, int d, double Ca, double la, double Cr, double lr);
+double dmdy(double *x, int i, int j, int k, int l, int N, int d, double Ca, double la, double Cr, double lr);
 
 
  //  Destination /////////////////////////////////////////////////////////////////////////////////////////////////////////

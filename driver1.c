@@ -37,6 +37,7 @@ int main(void)
 	 // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 5, 6, 7, 8, 999 };
      // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
      double x[] = {1, 0, 2, 0, 1, 2, 3, 4, 999 };
+	 // double x[] = {1, 2, 3, 4, 1, 2, 3, 4, 999 };
 	 // double x[] = {1, 1, 1, 2, 999 };
      double u[] = {1, 1};
 
@@ -201,7 +202,8 @@ void my_fx(double *fx, double *x, double *u, double time) //evaluate of df/dx
 
 	 // GS(fx, x, N, d, nx);
 
-	 GM(fx, x, N, d, nx);
+	 // GM(fx, x, N, d, nx);
+	 GL(fx, x, N, d, nx);
 
      return;
 }     

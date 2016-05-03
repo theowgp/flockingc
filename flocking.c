@@ -142,7 +142,7 @@ void GM(double *res, double *x, int N, int d, int nx)
 				{
 					for(l=0; l<d; l++)
 					{
-						res[map((N+1)*d + i*d + k, j*d + l, nx)] = -dmdy(x, i, j, k, l, N, d)/(N+1);
+						res[map((N+1)*d + i*d + k, j*d + l, nx)] = -dmdy(x, i, j, k, l, N, d, Ca, la, Cr, lr)/(N+1);
 					}
 				}
 			}
@@ -157,7 +157,7 @@ void GM(double *res, double *x, int N, int d, int nx)
 						{
 							if(s!=i)
 							{
-								temp += dmdx(x, i, s, k, l, N, d);
+								temp += dmdx(x, i, s, k, l, N, d, Ca, la, Cr, lr);
 							}
 						}
 						res[map((N+1)*d + i*d + k, j*d + l, nx)] = -temp/(N+1);
@@ -169,8 +169,26 @@ void GM(double *res, double *x, int N, int d, int nx)
 	}
 }
 
+void GL(double *res, double *x, int N, int d, int nx)
+{
+	int i, k, l;
 
-double dmdx(double *x, int i, int j, int k, int l, int N, int d)// i,j = 1...N+1;    k,l = 1...d;
+	for(i=1; i<N+1; i++)
+	{
+		for(k=0; k<d; k++)
+		{
+			for(l=0; l<d; l++)
+			{
+				res[map((N+1)*d + i*d + k, i*d + l, nx)] = -gamma1*dmdx(x, i, 0, k, l, N, d, Ca0, la0, Cr0, lr0);
+				res[map((N+1)*d + i*d + k, l, nx)] = -gamma1*dmdy(x, i, 0, k, l, N, d, Ca0, la0, Cr0, lr0);
+
+			}
+		}
+	}
+}
+
+
+double dmdx(double *x, int i, int j, int k, int l, int N, int d, double Ca, double la, double Cr, double lr)// i,j = 1...N+1;    k,l = 1...d;
 {
 	int z;
 
@@ -196,9 +214,9 @@ double dmdx(double *x, int i, int j, int k, int l, int N, int d)// i,j = 1...N+1
 
 	return res;
 }
-double dmdy(double *x, int i, int j, int k, int l, int N, int d)// i,j = 1...N+1;    k,l = 1...d;
+double dmdy(double *x, int i, int j, int k, int l, int N, int d, double Ca, double la, double Cr, double lr)// i,j = 1...N+1;    k,l = 1...d;
 {
-	return - dmdx(x, i, j, k, l, N, d);
+	return - dmdx(x, i, j, k, l, N, d, Ca, la, Cr, lr);
 }
 
 

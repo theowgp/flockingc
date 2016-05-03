@@ -223,8 +223,62 @@ double dmdy(double *x, int i, int j, int k, int l, int N, int d, double Ca, doub
 
 
 
+// Objective /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
- //  Destination /////////////////////////////////////////////////////////////////////////////////////////////////////////
+double l1(double *x, int N, int d)
+{
+	int i, k;
+
+	double temp = 0;
+	for(i=1; i<N+1; i++)
+	{
+		double temp1[2];
+		for(k=0; k<d; k++)
+		{
+			temp1[k] = x[k] - x[i*d + k];
+		}
+		double temp3 = norm(temp1, d);
+
+		temp += temp3*temp3*temp3*temp3;
+	}
+
+	return 0.5*mu*temp;
+}
+
+double Gl1(double *res,  double *x, int N, int d, int nx)
+{
+	 int j, k;
+
+	 double temp[2];
+	 for(j=1; j<N+1; j++)
+	 { 
+
+		 double temp1[2];
+		 for(k=0; k<d; k++)
+		 {
+	 		temp1[k] = x[k] - x[j*d + k];
+         }
+		 double temp3 = norm(temp1, d);
+
+		 for(k=0; k<d; k++)
+		 {
+	         res[map(nx-1, j*d + k, nx)] = -2*mu*temp3*temp3*temp1[k];
+	         
+
+	         temp[k] += temp3*temp3*temp1[k];
+		 }
+	 }
+
+	 for(k=0; k<d; k++)
+	 {
+	 	res[map(nx-1, k, nx)] = 2*mu*temp[k];
+	 }	
+}
+
+
+
+
+//  Destination /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // free memory after use!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 double* xdes(double t, int d)

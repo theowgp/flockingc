@@ -10,3 +10,4 @@ double    la0 = 8;
 double    Cr0 = 9;
 double    lr0 = 10;
 double gamma1 = 11;
+double     mu = 12;

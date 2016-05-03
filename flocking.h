@@ -24,6 +24,9 @@ double dmdx(double *x, int i, int j, int k, int l, int N, int d, double Ca, doub
 double dmdy(double *x, int i, int j, int k, int l, int N, int d, double Ca, double la, double Cr, double lr);
 
 
+// Objective /////////////////////////////////////////////////////////////////////////////////////////
+double l1(double *x, int N, int d);
+
  //  Destination /////////////////////////////////////////////////////////////////////////////////////////////////////////
 double* xdes(double t, int d);
 

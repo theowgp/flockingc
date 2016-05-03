@@ -19,6 +19,10 @@ void fx(double *res, double *v, int N, int d);
 //  Gf ///////////////////////////////////////////////////////////////////////////////////////////////////////
 void GS(double *res, double *x, int N, int d, int nx);
 
+void GM(double *res, double *x, int N, int d, int nx);
+double dmdx(double *x, int i, int j, int k, int l, int N, int d);
+double dmdy(double *x, int i, int j, int k, int l, int N, int d);
+
 
  //  Destination /////////////////////////////////////////////////////////////////////////////////////////////////////////
 double* xdes(double t, int d);

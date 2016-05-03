@@ -188,18 +188,20 @@ void my_fx(double *fx, double *x, double *u, double time) //evaluate of df/dx
 	 setmt0(fx, nx, nx);
 
 
-	 // set the dfx/dv part which is an identity matrix
-	 int i, k, l;
-	 for(i=0; i<N+1; i++)
-	 {
-		 for(k=i*d; k<i*d+d; k++)
-		 {
-			 fx[map(k, k + (N+1)*d, nx)] = 1;
+	 // // set the dfx/dv part which is an identity matrix
+	 // int i, k, l;
+	 // for(i=0; i<N+1; i++)
+	 // {
+		//  for(k=i*d; k<i*d+d; k++)
+		//  {
+		// 	 fx[map(k, k + (N+1)*d, nx)] = 1;
 						
-		 }
-	 }
+		//  }
+	 // }
 
-	 GS(fx, x, N, d, nx);
+	 // GS(fx, x, N, d, nx);
+
+	 GM(fx, x, N, d, nx);
 
      return;
 }     

@@ -19,11 +19,11 @@ void my_fx(double *fx, double *x, double *u, double time); //evaluate of df/dx
 
 double T = 1;
 
-int N = 0;
+int N = 1;
 int d = 2;
 int n = 100;
 // int nx = 2*(N+1)*d + 1; 
-int nx = 5;
+int nx = 9;
 int nc = 2;
 int ns = 3;
 
@@ -56,15 +56,87 @@ int main(void)
      /*initial state0*/
      state0[0] = 0;
      state0[1] = 0;
-     state0[2] = 0;
-     state0[3] = 0.5;
+     state0[2] = 1;
+     state0[3] = 0;
      state0[4] = 0;
+     state0[5] = 0.5;
+     state0[6] = 0;
+     state0[7] = 0.5;
+     state0[8] = 0;
+         
+
      /*call optcon_xrk*/
      optcon(grad_tol, n, nx, nc, ns, t0, tf, control, &state0[0], 
             state, a, b, my_phi, my_dphi, my_f, my_fx, my_fu);
      
      free(state);
      free(control);
+
+     printf("\n");
+
+
+
+
+
+
+
+      // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 5, 6, 7, 8, 999 };
+     // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
+     // double x[] = {1, 0, 2, 0, 1, 2, 3, 4, 999 };
+	 double *x;
+	 x = state0;
+	 // double x[] = {1, 1, 1, 2, 999 };
+     double u[] = {1, 2};
+     
+
+
+     // double *f;
+     // f = (double*) malloc(nx*sizeof(double));  // what is the difference ???????????
+     double f[nx];                                // what is the difference ???????????
+     my_f(f, x, u, 0);
+     printf("\nf = \n");
+     pad(f, nx);
+
+     // int testtemp1 = 7%2;
+     // int testtemp2 = 7/2;
+     // printf("\n k = %d\n", map(0, 2, 3));
+     // int *testtemp = imap(6, 3);
+     // printf(" i = %d\n j = %d\n\n", testtemp[0], testtemp[1]);
+
+     // double *matrixf;
+     // matrixf = (double*) malloc(nx*nx*sizeof(double));
+     double matrixf[nx*nx];
+     my_fx(matrixf, x, u, 0);
+     printf("\nfx =");
+     pmd(matrixf,  nx, nx);
+     // pmd(matrixf, nx*nx, 1);
+    
+
+     // double *matrixu;
+     // matrixu = (double*) malloc(nx*d*sizeof(double));
+     double matrixu[nx*d];
+     my_fu(matrixu, x, u, 0);
+     printf("\nfu =");
+     pmd(matrixu,  nx, d);
+     // pmd(matrixu, nx*d, 1);
+    
+
+     double valuephi;
+     valuephi = my_phi(f);
+     printf("\nphi = %f\n", valuephi);
+
+     // double *vectordphi;
+     // vectordphi = (double*) malloc(nx*sizeof(double));
+     double vectordphi[nx];
+     my_dphi(vectordphi, f);
+     printf("\ndphi =");
+     pmd(vectordphi,  nx, 1);
+    
+
+     double valuel1 = l1(x, N, d);
+     printf("\nl1 = %f\n", valuel1);
+
+
 
      printf("\n");
 }
@@ -85,13 +157,17 @@ void my_f(double *f, double *x, double *u, double time)// evaluate of f(x)
 	     
 	 S(f, x, N, d);
 
+	 M(f, x, N, d);
+
+	 L(f, x, N, d);
+
 	 int i;
 	 for(i=0; i<d; i++)
 	 {
 	 	*(f + (N+1)*d + i) += u[i];
 	 }
 	    
-	 *(f+nx-1) = 0.5*nu*norm(u, nc)*norm(u, nc);  //What exactly is the vector u ??? Is it n*ns*nc    or just nc ???
+	 *(f+nx-1) = 0.5*nu*norm(u, nc)*norm(u, nc) + l1(x, N, d);  //What exactly is the vector u ??? Is it n*ns*nc    or just nc ???
 
 	    
 	 return;
@@ -173,6 +249,12 @@ void my_fx(double *fx, double *x, double *u, double time) //evaluate of df/dx
 	 }
 
 	 GS(fx, x, N, d, nx);
+
+	 GM(fx, x, N, d, nx);
+	 
+	 GL(fx, x, N, d, nx);
+
+	 Gl1(fx, x, N, d, nx);
 
      return;
 }     

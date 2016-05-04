@@ -109,7 +109,7 @@ void GS(double *res, double *x, int N, int d, int nx)
 
 	for(i=0; i<N+1; i++)
 	{
-		double temp = norm(&x[i*d], d);
+		double temp = norm(&x[(N+1)*d + i*d], d);
 
 		for(k=0; k<d; k++)
 		{
@@ -142,7 +142,7 @@ void GM(double *res, double *x, int N, int d, int nx)
 				{
 					for(l=0; l<d; l++)
 					{
-						res[map((N+1)*d + i*d + k, j*d + l, nx)] = -dmdy(x, i, j, k, l, N, d, Ca, la, Cr, lr)/(N+1);
+						res[map((N+1)*d + i*d + k, j*d + l, nx)] += -dmdy(x, i, j, k, l, N, d, Ca, la, Cr, lr)/(N+1);
 					}
 				}
 			}
@@ -160,7 +160,7 @@ void GM(double *res, double *x, int N, int d, int nx)
 								temp += dmdx(x, i, s, k, l, N, d, Ca, la, Cr, lr);
 							}
 						}
-						res[map((N+1)*d + i*d + k, j*d + l, nx)] = -temp/(N+1);
+						res[map((N+1)*d + i*d + k, j*d + l, nx)] += -temp/(N+1);
 					}
 				}
 
@@ -179,8 +179,8 @@ void GL(double *res, double *x, int N, int d, int nx)
 		{
 			for(l=0; l<d; l++)
 			{
-				res[map((N+1)*d + i*d + k, i*d + l, nx)] = -gamma1*dmdx(x, i, 0, k, l, N, d, Ca0, la0, Cr0, lr0);
-				res[map((N+1)*d + i*d + k, l, nx)] = -gamma1*dmdy(x, i, 0, k, l, N, d, Ca0, la0, Cr0, lr0);
+				res[map((N+1)*d + i*d + k, i*d + l, nx)] += -gamma1*dmdx(x, i, 0, k, l, N, d, Ca0, la0, Cr0, lr0);
+				res[map((N+1)*d + i*d + k, l, nx)] += -gamma1*dmdy(x, i, 0, k, l, N, d, Ca0, la0, Cr0, lr0);
 
 			}
 		}
@@ -281,17 +281,18 @@ double Gl1(double *res,  double *x, int N, int d, int nx)
 //  Destination /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // free memory after use!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-double* xdes(double t, int d)
+double xdes(double t, int k)
 {
-	double *res = (double*) malloc(d*sizeof(double));
-	// double res[d];
+	// double *res = (double*) malloc(d*sizeof(double));
+	// // double res[d];
 
-	int k;
-	for(k=0; k<d; k++)
-	{
-		res[k] = t;
-	}
-	return res;
+	// int k;
+	// for(k=0; k<d; k++)
+	// {
+	// 	res[k] = t;
+	// }
+	// return res;
+	return t;
 }
 
 

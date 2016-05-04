@@ -133,14 +133,13 @@ void my_dphi(double *dphi, double *x_f) // evaluate of dF/dx
 {
  	 setmt0(dphi, nx, d);
 
- 	 double *des = xdes(T, d);
-
+ 	 
  	 int k;
 	 for(k=0; k<d; k++)
 	 {
-	 	dphi[k] = x_f[k] - des[k];
+	 	dphi[k] = x_f[k] - xdes(T, k);
 	 }
-	 free(des);
+	 
 
 	 dphi[nx-1] = 1;
 
@@ -149,15 +148,15 @@ void my_dphi(double *dphi, double *x_f) // evaluate of dF/dx
 
 double my_phi(double *x_f) //evaluate of F
 {
-	 double *temp =	(double*) malloc(d*sizeof(double));
-	 double *des = xdes(T, d);
+	 double temp[d];
+	 
 
 	 int k;
 	 for(k=0; k<d; k++)
 	 {
-	 	temp[k] = x_f[k] - des[k];
+	 	temp[k] = x_f[k] - xdes(T, k);
 	 }
-	 free(des);
+	 
 
      return 0.5*norm(temp, d)*norm(temp, d) + x_f[nx-1];
 }

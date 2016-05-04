@@ -36,7 +36,7 @@ int main(void)
 {
 	 double t0, tf ;
      double state0[nx];
-     double grad_tol = 1.0e-7;
+     double grad_tol = 1.0e-10;
      double *state;
      double *control;
      double *a, *b;
@@ -90,55 +90,55 @@ int main(void)
      
 
 
-     // double *f;
-     // f = (double*) malloc(nx*sizeof(double));  // what is the difference ???????????
-     double f[nx];                                // what is the difference ???????????
-     my_f(f, x, u, 0);
-     printf("\nf = \n");
-     pad(f, nx);
+     // // double *f;
+     // // f = (double*) malloc(nx*sizeof(double));  // what is the difference ???????????
+     // double f[nx];                                // what is the difference ???????????
+     // my_f(f, x, u, 0);
+     // printf("\nf = \n");
+     // pad(f, nx);
 
-     // int testtemp1 = 7%2;
-     // int testtemp2 = 7/2;
-     // printf("\n k = %d\n", map(0, 2, 3));
-     // int *testtemp = imap(6, 3);
-     // printf(" i = %d\n j = %d\n\n", testtemp[0], testtemp[1]);
+     // // int testtemp1 = 7%2;
+     // // int testtemp2 = 7/2;
+     // // printf("\n k = %d\n", map(0, 2, 3));
+     // // int *testtemp = imap(6, 3);
+     // // printf(" i = %d\n j = %d\n\n", testtemp[0], testtemp[1]);
 
-     // double *matrixf;
-     // matrixf = (double*) malloc(nx*nx*sizeof(double));
-     double matrixf[nx*nx];
-     my_fx(matrixf, x, u, 0);
-     printf("\nfx =");
-     pmd(matrixf,  nx, nx);
-     // pmd(matrixf, nx*nx, 1);
+     // // double *matrixf;
+     // // matrixf = (double*) malloc(nx*nx*sizeof(double));
+     // double matrixf[nx*nx];
+     // my_fx(matrixf, x, u, 0);
+     // printf("\nfx =");
+     // pmd(matrixf,  nx, nx);
+     // // pmd(matrixf, nx*nx, 1);
     
 
-     // double *matrixu;
-     // matrixu = (double*) malloc(nx*d*sizeof(double));
-     double matrixu[nx*d];
-     my_fu(matrixu, x, u, 0);
-     printf("\nfu =");
-     pmd(matrixu,  nx, d);
-     // pmd(matrixu, nx*d, 1);
+     // // double *matrixu;
+     // // matrixu = (double*) malloc(nx*d*sizeof(double));
+     // double matrixu[nx*d];
+     // my_fu(matrixu, x, u, 0);
+     // printf("\nfu =");
+     // pmd(matrixu,  nx, d);
+     // // pmd(matrixu, nx*d, 1);
     
 
-     double valuephi;
-     valuephi = my_phi(f);
-     printf("\nphi = %f\n", valuephi);
+     // double valuephi;
+     // valuephi = my_phi(x);
+     // printf("\nphi = %f\n", valuephi);
 
-     // double *vectordphi;
-     // vectordphi = (double*) malloc(nx*sizeof(double));
-     double vectordphi[nx];
-     my_dphi(vectordphi, f);
-     printf("\ndphi =");
-     pmd(vectordphi,  nx, 1);
+     // // double *vectordphi;
+     // // vectordphi = (double*) malloc(nx*sizeof(double));
+     // double vectordphi[nx];
+     // my_dphi(vectordphi, x);
+     // printf("\ndphi =");
+     // pmd(vectordphi,  nx, 1);
     
 
-     double valuel1 = l1(x, N, d);
-     printf("\nl1 = %f\n", valuel1);
+     // double valuel1 = l1(x, N, d);
+     // printf("\nl1 = %f\n", valuel1);
 
 
 
-     printf("\n");
+     // printf("\n");
 }
 
 
@@ -178,14 +178,13 @@ void my_dphi(double *dphi, double *x_f) // evaluate of dF/dx
 {
  	 setmt0(dphi, nx, d);
 
- 	 double *des = xdes(T, d);
-
+ 	 
  	 int k;
 	 for(k=0; k<d; k++)
 	 {
-	 	dphi[k] = x_f[k] - des[k];
+	 	dphi[k] = x_f[k] - xdes(T, k);
 	 }
-	 free(des);
+	 
 
 	 dphi[nx-1] = 1;
 
@@ -194,15 +193,15 @@ void my_dphi(double *dphi, double *x_f) // evaluate of dF/dx
 
 double my_phi(double *x_f) //evaluate of F
 {
-	 double *temp =	(double*) malloc(d*sizeof(double));
-	 double *des = xdes(T, d);
+	 double temp[d];
+	 
 
 	 int k;
 	 for(k=0; k<d; k++)
 	 {
-	 	temp[k] = x_f[k] - des[k];
+	 	temp[k] = x_f[k] - xdes(T, k);
 	 }
-	 free(des);
+	 
 
      return 0.5*norm(temp, d)*norm(temp, d) + x_f[nx-1];
 }

@@ -292,6 +292,9 @@ double xdes(double t, int k)
 	// 	res[k] = t;
 	// }
 	// return res;
+	if(k == 0) return  -t;
+	else if (k == 1) return t;
+	
 	return t;
 }
 

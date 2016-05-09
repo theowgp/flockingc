@@ -34,9 +34,9 @@ int ns = 3;
 
 int main(void) 
 {
-	 double t0, tf ;
+	double t0, tf ;
      double state0[nx];
-     double grad_tol = 1.0e-10;
+     double grad_tol = 1.0e-7;
      double *state;
      double *control;
      double *a, *b;
@@ -54,21 +54,51 @@ int main(void)
      	control[i] = 0;
      }
      /*initial state0*/
-     state0[0] = 0;
+     // state0[0] = 0;
+     // state0[1] = 0;
+     // state0[2] = 1;
+     // state0[3] = 0;
+     // state0[4] = 0;
+     // state0[5] = 0.5;
+     // state0[6] = 0;
+     // state0[7] = 0.5;
+     // state0[8] = 0;
+
+     // initialize positions
+     state0[0] = -1;
      state0[1] = 0;
-     state0[2] = 1;
-     state0[3] = 0;
-     state0[4] = 0;
-     state0[5] = 0.5;
-     state0[6] = 0;
-     state0[7] = 0.5;
-     state0[8] = 0;
+     state0[(N+1)*d + 0] = 0;
+     state0[(N+1)*d + 1] = -1;
+
+     state0[d + 0] = 0;
+     state0[d + 1] = 0;
+     state0[(N+1)*d + d + 0] = 0;
+     state0[(N+1)*d + d + 1] = 0;
+     
+     int k;
+     for (i=2; i<N+1; i++)
+     {
+          for(k=0; k<d; k++)
+          {
+               state0[i*d + 0] = state0[(i-1)*d + 0] + 0.01;     
+               state0[i*d + 1] = 0;
+          }
+          for(k=0; k<d; k++)
+          {
+               state0[(N+1)*d + i*d + 0] =  0;     
+               state0[(N+1)*d + i*d + 1] =  -0.2;
+          }
+     }
          
 
      /*call optcon_xrk*/
      optcon(grad_tol, n, nx, nc, ns, t0, tf, control, &state0[0], 
             state, a, b, my_phi, my_dphi, my_f, my_fx, my_fu);
      
+     
+     wtf(state, n, ns, nx, N, d);
+
+
      free(state);
      free(control);
 
@@ -80,13 +110,15 @@ int main(void)
 
 
 
-      // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 5, 6, 7, 8, 999 };
-     // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
-     // double x[] = {1, 0, 2, 0, 1, 2, 3, 4, 999 };
-	 double *x;
-	 x = state0;
-	 // double x[] = {1, 1, 1, 2, 999 };
-     double u[] = {1, 2};
+
+
+  //     // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 5, 6, 7, 8, 999 };
+  //    // double x[] = {2, 2, 2, 2, 2, 2, 3, 1, 0, 5, 6, 0, 999 };
+  //    // double x[] = {1, 0, 2, 0, 1, 2, 3, 4, 999 };
+	 // double *x;
+	 // x = state0;
+	 // // double x[] = {1, 1, 1, 2, 999 };
+  //    double u[] = {1, 2};
      
 
 

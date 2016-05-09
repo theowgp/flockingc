@@ -41,7 +41,7 @@ void setmt0(double *f, int n, int m)
 	 }
 }
 
-void wtf(double *state, int n, int ns, int nx, int N, int d)
+void wtf(double **states, int n, int ns, int nx, int N, int d, int nMPC)
 {
 
 
@@ -59,13 +59,21 @@ void wtf(double *state, int n, int ns, int nx, int N, int d)
       fprintf(f, " %d\n", nx);
       fprintf(f, " %d\n", N);
       fprintf(f, " %d\n", d);
+      fprintf(f, " %d\n", nMPC);
+
  
-      /* print integers and floats */
-      int i;
-      for(i=0; i<n*ns*nx+nx; i++)
+
+      int i, j;
+      for(i=0; i<nMPC; i++)
       {
-          fprintf(f, "%f\n", state[i]);    
+          for(j=0; j<n*ns*nx+nx; j++)
+          {
+               fprintf(f, "%f\n", states[i][j]);    
+          }
+
       }
+            
+      
       
       fclose(f);
 }

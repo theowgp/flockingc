@@ -141,6 +141,9 @@ int optcon
     double step;
     int setup_status, cg_status;
     int i;
+
+    
+    
     /* set the user-provide functions as extern functions */
     optcon_phi  = phi ;
     optcon_dphi = dphi ;
@@ -212,18 +215,24 @@ int optcon
             return (-13) ;
         }
     }
-    cg_status = cg_descent (grad_tol, control, work.n*work.ns*work.nc, 
-              optcon_cost, optcon_gradient, work.cg_work, step, &Stats) ;
-    if ( parm.PrintFinal || parm.PrintLevel ) 
-    {
-         printf ("Final state: \n");
-         for ( i = 0; i < nx; i ++ ) {
-             printf ("final[%d] = %.10e\n", i+1, work.state_f[i]);
-         }
-         printf ("Terminal cost: %.10e\n", Stats.f);
-    }
-    free (work.cg_work) ;
-    return (cg_status) ;
+    
+    // cg_status = cg_descent (grad_tol, control, work.n*work.ns*work.nc, 
+    //           optcon_cost, optcon_gradient, work.cg_work, step, &Stats);
+    // if ( parm.PrintFinal || parm.PrintLevel ) 
+    // {
+    //      printf ("Final state: \n");
+    //      for ( i = 0; i < nx; i ++ ) {
+    //          printf ("final[%d] = %.10e\n", i+1, work.state_f[i]);
+    //      }
+    //      printf ("Terminal cost: %.10e\n", Stats.f);
+    // }
+    
+    double h = (t_f-t_0)/n/ns;
+    cg_status = st_descent (grad_tol, control, work.n*work.ns*work.nc, 
+              optcon_cost, optcon_gradient, step,  h) ;
+
+    free (work.cg_work);
+    return (cg_status);
 }
 /*
     Function optcon_setup()

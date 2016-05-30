@@ -1031,7 +1031,7 @@ void cg_step
 {
     int n5, i ;
     n5 = n % 5 ;
-    for (i = 0; i < n5; i++) xtemp [i] = x[i] + alpha*d[i] ;
+    for (i = 0; i < n5; i++) xtemp [i] = x[i] + alpha*d[i];
     for (; i < n;)
     { 
         xtemp [i] = x [i] + alpha*d [i] ;
@@ -1045,6 +1045,11 @@ void cg_step
         xtemp [i] = x [i] + alpha*d [i] ;
         i++ ;
     }
+//     int i;
+//     for (i = 0; i < n; i++) 
+//     { 
+//         xtemp [i] = x [i] + alpha*d [i] ;
+//     }
 }
 
 /* approximate Wolfe line search routine */

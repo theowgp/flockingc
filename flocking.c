@@ -302,18 +302,6 @@ double xdes(double t, int k)
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
-double norm(double *v, int n)
-{
-	double temp = 0;
-
-	int i;
-	for(i = 0; i<n; i++)
-	{
-		temp += v[i]*v[i];
-	} 
-
-	return sqrt(temp);
-}
 
 int map(int i, int j, int nx)
 {

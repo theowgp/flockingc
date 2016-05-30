@@ -1,4 +1,6 @@
 #include "cg_descent.h"
+#include "st_descent.h"
+
 typedef struct optcon_struct
 {
     int n;    

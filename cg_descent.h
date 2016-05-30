@@ -225,3 +225,6 @@ int cg_updateW
       (double *, double*), /* gradient at x*/
     cg_parameter *Parm   /* cg parameters */
 ) ;
+
+double my_projection(double x, int i, double *ctrlbds);
+double my_final_projection(double *x, int dim, int nc, double *ctrlbds);

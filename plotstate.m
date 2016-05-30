@@ -8,9 +8,11 @@ nx = A(3);
 N  = A(4);
 d  = A(5);
 nMPC = A(6);
+t0 = A(7);
+tf = A(8);
 
 
-A = A(7:length(A));
+A = A(9:length(A));
 
 
 sol = zeros(d, N+1, n+1, nMPC);

@@ -601,8 +601,34 @@ Exit:
         printf ("function evaluations: %i\n", Parm.nf) ;
         printf ("gradient evaluations: %i\n", Parm.ng) ;
     }
+
+
+    // the control dimensions
+    int nc = 2;
+    // the control constraints
+    double ctrlbds[] = {5, 5}; 
+    // do the final projection
+    my_final_projection(x, dim, nc, ctrlbds);
+
+    // this piece is run in order to evaluate the statue at the projected control
+    double dispensabletemp[dim];
+    cg_grad(dispensabletemp, x);
+
+
+
     return (status) ;
 }
+
+double my_final_projection(double *x, int dim, int nc, double *ctrlbds)
+{
+    int i;
+    for(i=0; i<dim; i++)
+    {
+        if(ABS(x[i])>ctrlbds[i%nc]) x[i] = ABS(x[i])/x[i]*ctrlbds[i%nc];
+    }
+    
+}
+
 
 /*
     PARAMETERS:
@@ -1029,27 +1055,36 @@ void cg_step
     int         n   /* length of the vectors */
 )
 {
-    int n5, i ;
-    n5 = n % 5 ;
-    for (i = 0; i < n5; i++) xtemp [i] = x[i] + alpha*d[i];
-    for (; i < n;)
+    // int n5, i ;
+    // n5 = n % 5 ;
+    // for (i = 0; i < n5; i++) xtemp [i] = x[i] + alpha*d[i];
+    // for (; i < n;)
+    // { 
+    //     xtemp [i] = x [i] + alpha*d [i] ;
+    //     i++ ;
+    //     xtemp [i] = x [i] + alpha*d [i] ;
+    //     i++ ;
+    //     xtemp [i] = x [i] + alpha*d [i] ;
+    //     i++ ;
+    //     xtemp [i] = x [i] + alpha*d [i] ;
+    //     i++ ;
+    //     xtemp [i] = x [i] + alpha*d [i] ;
+    //     i++ ;
+    // }
+
+    double tempctrlbds[] = {1, 1};
+
+    int i;
+    for (i = 0; i < n; i++) 
     { 
-        xtemp [i] = x [i] + alpha*d [i] ;
-        i++ ;
-        xtemp [i] = x [i] + alpha*d [i] ;
-        i++ ;
-        xtemp [i] = x [i] + alpha*d [i] ;
-        i++ ;
-        xtemp [i] = x [i] + alpha*d [i] ;
-        i++ ;
-        xtemp [i] = x [i] + alpha*d [i] ;
-        i++ ;
+        // xtemp [i] = my_projection(x [i] + alpha*d [i], i%2,  tempctrlbds);
+        xtemp [i] = x [i] + alpha*d [i];
     }
-//     int i;
-//     for (i = 0; i < n; i++) 
-//     { 
-//         xtemp [i] = x [i] + alpha*d [i] ;
-//     }
+}
+double my_projection(double x, int i, double *ctrlbds)
+{
+    if(ABS(x)>ctrlbds[i]) return ABS(x)/x*ctrlbds[i];
+    else return x;
 }
 
 /* approximate Wolfe line search routine */

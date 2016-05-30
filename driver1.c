@@ -17,7 +17,7 @@ void my_fx(double *fx, double *x, double *u, double time); //evaluate of df/dx
 
 
 
-double T = 0.5;
+double T = 1;
 
 int N = 9;
 int d = 2;
@@ -146,9 +146,13 @@ int main(void)
 	
 	
 	
+	FILE *fs = fopen("state.txt", "w");
+    wtf(states, fs, n, ns, nx, N, d, nMPC, t0, tf);    
+	fclose(fs);
 
-	wtf(states, n, ns, nx, N, d, nMPC);    
-		
+	FILE *fc = fopen("control.txt", "w");
+    wtf(controls, fc, n, ns, nc, N, d, nMPC, t0, tf);    
+	fclose(fc);
     
 	
 	printf("\n");

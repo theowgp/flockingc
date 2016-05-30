@@ -41,25 +41,24 @@ void setmt0(double *f, int n, int m)
 	 }
 }
 
-void wtf(double **states, int n, int ns, int nx, int N, int d, int nMPC)
+void wtf(double **states, FILE *f, int n, int ns, int nx, int N, int d, int nMPC, double t0, double tf)
 {
 
 
-      FILE *f = fopen("state.txt", "w");
       if (f == NULL)
       {
-          printf("Error opening file!\n");
-        
+        printf("Error opening file!\n");
       }
- 
-      
-      
+            
       fprintf(f, " %d\n", n);
       fprintf(f, " %d\n", ns);
       fprintf(f, " %d\n", nx);
       fprintf(f, " %d\n", N);
       fprintf(f, " %d\n", d);
       fprintf(f, " %d\n", nMPC);
+      fprintf(f, " %f\n", t0);
+      fprintf(f, " %f\n", tf);
+
 
  
 
@@ -72,8 +71,5 @@ void wtf(double **states, int n, int ns, int nx, int N, int d, int nMPC)
           }
 
       }
-            
       
-      
-      fclose(f);
 }
